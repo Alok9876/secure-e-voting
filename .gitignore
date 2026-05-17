@@ -1,0 +1,10 @@
+node_modules/
+**/node_modules/
+.env
+**/.env
+.DS_Store
+.vscode/
+/backend/.git
+/secure-evoting/backend/.git
+dist/
+coverage/
