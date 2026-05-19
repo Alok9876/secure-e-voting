@@ -1,4 +1,6 @@
 const express = require('express');
+const dns = require('dns');
+dns.setServers(['8.8.8.8', '1.1.1.1']);
 const mongoose = require('mongoose');
 const cors = require('cors');
 const rateLimit = require('express-rate-limit');
@@ -12,6 +14,8 @@ const resultRoutes   = require('./routes/results');
 const { connectDB }  = require('./config/db');
 
 const app = express();
+
+const path = require('path');
 
 // ─── Middleware ───────────────────────────────────────────────────
 app.use(cors({
@@ -45,6 +49,15 @@ app.get('/api/health', (req, res) => {
 app.use((req, res) => {
   res.status(404).json({ success: false, message: 'Route not found' });
 });
+
+// ─── Serve Frontend in Production ──────────────────────────────────
+if (process.env.NODE_ENV === 'production') {
+  const buildPath = path.join(__dirname, '..', 'frontend', 'build');
+  app.use(express.static(buildPath));
+  app.get('*', (req, res) => {
+    res.sendFile(path.join(buildPath, 'index.html'));
+  });
+}
 
 // ─── Global Error Handler ─────────────────────────────────────────
 app.use((err, req, res, next) => {
