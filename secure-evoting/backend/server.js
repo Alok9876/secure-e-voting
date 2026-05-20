@@ -15,8 +15,6 @@ const { connectDB }  = require('./config/db');
 
 const app = express();
 
-const path = require('path');
-
 // ─── Middleware ───────────────────────────────────────────────────
 app.use(cors({
   origin: process.env.FRONTEND_URL || 'http://localhost:3000',
@@ -49,15 +47,6 @@ app.get('/api/health', (req, res) => {
 app.use((req, res) => {
   res.status(404).json({ success: false, message: 'Route not found' });
 });
-
-// ─── Serve Frontend in Production ──────────────────────────────────
-if (process.env.NODE_ENV === 'production') {
-  const buildPath = path.join(__dirname, '..', 'frontend', 'build');
-  app.use(express.static(buildPath));
-  app.get('*', (req, res) => {
-    res.sendFile(path.join(buildPath, 'index.html'));
-  });
-}
 
 // ─── Global Error Handler ─────────────────────────────────────────
 app.use((err, req, res, next) => {
