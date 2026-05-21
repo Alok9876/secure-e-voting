@@ -1,0 +1,87 @@
+:root {
+  --primary:   #1A3C6E;
+  --secondary: #2E75B6;
+  --accent:    #C00000;
+  --light-bg:  #f0f4fb;
+  --card-shadow: 0 4px 20px rgba(26,60,110,0.10);
+}
+
+body {
+  font-family: 'Segoe UI', Arial, sans-serif;
+  background-color: #f8f9fa;
+  color: #333;
+}
+
+/* ── Navbar ── */
+.navbar-brand { font-weight: 700; font-size: 1.3rem; letter-spacing: 0.5px; }
+.navbar { background: var(--primary) !important; }
+
+/* ── Hero ── */
+.hero-section {
+  background: linear-gradient(135deg, var(--primary) 0%, var(--secondary) 100%);
+  color: #fff;
+  padding: 90px 0 70px;
+}
+.hero-section h1 { font-size: 2.8rem; font-weight: 800; }
+
+/* ── Cards ── */
+.card { border: none; border-radius: 12px; box-shadow: var(--card-shadow); transition: transform .2s; }
+.card:hover { transform: translateY(-3px); }
+
+/* ── Buttons ── */
+.btn-primary   { background: var(--primary);   border-color: var(--primary); }
+.btn-primary:hover { background: var(--secondary); border-color: var(--secondary); }
+.btn-danger    { background: var(--accent);    border-color: var(--accent); }
+
+/* ── Badges ── */
+.badge-active   { background: #198754; }
+.badge-upcoming { background: #fd7e14; }
+.badge-closed   { background: #6c757d; }
+
+/* ── Election card ── */
+.election-card { border-left: 5px solid var(--secondary); }
+.election-card.active-card  { border-left-color: #198754; }
+.election-card.closed-card  { border-left-color: #6c757d; }
+
+/* ── Vote receipt box ── */
+.receipt-box {
+  background: #e8f4e8;
+  border: 2px dashed #198754;
+  border-radius: 10px;
+  padding: 20px;
+  font-family: monospace;
+  word-break: break-all;
+}
+
+/* ── Candidate card ── */
+.candidate-card { cursor: pointer; border: 2px solid transparent; transition: all .2s; }
+.candidate-card:hover { border-color: var(--secondary); }
+.candidate-card.selected { border-color: var(--primary); background: var(--light-bg); }
+
+/* ── Stat cards ── */
+.stat-card { border-radius: 14px; padding: 22px 18px; color: #fff; }
+.stat-card.blue   { background: linear-gradient(135deg,#1A3C6E,#2E75B6); }
+.stat-card.green  { background: linear-gradient(135deg,#155724,#28a745); }
+.stat-card.orange { background: linear-gradient(135deg,#7d3700,#fd7e14); }
+.stat-card.red    { background: linear-gradient(135deg,#700,#C00000); }
+
+/* ── Table ── */
+.table thead { background: var(--primary); color: #fff; }
+
+/* ── Spinner overlay ── */
+.loading-overlay {
+  display: flex; align-items: center; justify-content: center;
+  min-height: 300px;
+}
+
+/* ── Admin sidebar ── */
+.admin-sidebar { background: var(--primary); min-height: 100vh; }
+.admin-sidebar .nav-link { color: rgba(255,255,255,.8); border-radius: 8px; margin-bottom: 4px; }
+.admin-sidebar .nav-link:hover,
+.admin-sidebar .nav-link.active { color: #fff; background: rgba(255,255,255,.15); }
+
+/* ── Result bar ── */
+.winner-badge {
+  background: linear-gradient(135deg,#155724,#28a745);
+  color:#fff; border-radius:8px; padding:4px 12px; font-size:.85rem;
+}
