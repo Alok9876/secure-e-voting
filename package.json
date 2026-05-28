@@ -8,6 +8,7 @@
     "dev": "nodemon server.js",
     "seed": "node seed.js",
     "db:check": "node scripts/check-db.js",
+    "users:demo": "node scripts/ensure-demo-users.js",
     "dev:seed": "node seed.js && nodemon server.js"
   },
   "dependencies": {
