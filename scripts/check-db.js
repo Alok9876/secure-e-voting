@@ -18,7 +18,7 @@ async function main() {
   }
 
   configureMongoDns(mongoUri);
-  await mongoose.connect(mongoUri, getMongoOptions());
+  await mongoose.connect(mongoUri, getMongoOptions(mongoUri));
 
   console.log(`Connected to ${mongoose.connection.host}/${mongoose.connection.name}`);
 

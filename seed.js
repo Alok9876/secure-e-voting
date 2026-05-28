@@ -113,7 +113,7 @@ async function seed() {
 
     // Connect
     console.log(c.blue('\n🔗  Connecting to MongoDB…'));
-    await mongoose.connect(mongoUri, getMongoOptions());
+    await mongoose.connect(mongoUri, getMongoOptions(mongoUri));
     console.log(c.green('✅  Connected!\n'));
 
     // ── Wipe existing data ────────────────────────────────────────

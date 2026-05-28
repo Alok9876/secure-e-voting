@@ -11,7 +11,7 @@ const connectDB = async () => {
     }
 
     configureMongoDns(mongoUri);
-    const conn = await mongoose.connect(mongoUri, getMongoOptions());
+    const conn = await mongoose.connect(mongoUri, getMongoOptions(mongoUri));
     console.log(`MongoDB Connected: ${conn.connection.host}/${conn.connection.name}`);
     await seedAdmin();
   } catch (error) {
