@@ -13,6 +13,7 @@ const Voter     = require('./models/Voter');
 const Election  = require('./models/Election');
 const Candidate = require('./models/Candidate');
 const Vote      = require('./models/Vote');
+const { configureMongoDns, getMongoOptions, getMongoUri } = require('./config/mongo');
 
 // ─── Colour helpers for console ──────────────────────────────────
 const c = {
@@ -102,12 +103,17 @@ const ELECTIONS_TEMPLATE = [
 
 async function seed() {
   try {
+    const mongoUri = getMongoUri();
+
+    if (!mongoUri) {
+      throw new Error('Missing MongoDB connection string. Set MONGO_URI or Railway\'s MONGO_URL variable.');
+    }
+
+    configureMongoDns(mongoUri);
+
     // Connect
     console.log(c.blue('\n🔗  Connecting to MongoDB…'));
-    await mongoose.connect(process.env.MONGO_URI, {
-      useNewUrlParser:    true,
-      useUnifiedTopology: true,
-    });
+    await mongoose.connect(mongoUri, getMongoOptions());
     console.log(c.green('✅  Connected!\n'));
 
     // ── Wipe existing data ────────────────────────────────────────
