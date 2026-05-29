@@ -1,23 +1,34 @@
-const bcrypt      = require('bcryptjs');
-const jwt         = require('jsonwebtoken');
-const crypto      = require('crypto');
-const nodemailer  = require('nodemailer');
-const Voter       = require('../models/Voter');
+const bcrypt = require('bcryptjs');
+const jwt    = require('jsonwebtoken');
+const crypto = require('crypto');
+const Voter  = require('../models/Voter');
 
 // ─── Generate JWT ────────────────────────────────────────────────
 const generateToken = (id) =>
   jwt.sign({ id }, process.env.JWT_SECRET, { expiresIn: '24h' });
 
-// ─── Mailer setup ─────────────────────────────────────────────────
-const transporter = nodemailer.createTransport({
-  host: 'smtp.gmail.com',
-  port: 587,
-  secure: false,
-  auth: { user: process.env.EMAIL_USER, pass: process.env.EMAIL_PASS },
-  connectionTimeout: 10000,
-  greetingTimeout: 10000,
-  socketTimeout: 15000,
-});
+// ─── Send email via Resend HTTPS API ─────────────────────────────
+async function sendEmail({ to, subject, html }) {
+  const res = await fetch('https://api.resend.com/emails', {
+    method: 'POST',
+    headers: {
+      Authorization: `Bearer ${process.env.RESEND_API_KEY}`,
+      'Content-Type': 'application/json',
+    },
+    body: JSON.stringify({
+      from: 'Secure E-Voting <onboarding@resend.dev>',
+      to: [to],
+      subject,
+      html,
+    }),
+  });
+  if (!res.ok) {
+    const errBody = await res.text();
+    throw new Error(`Resend API ${res.status}: ${errBody}`);
+  }
+  return res.json();
+}
+
 
 
 // ─── @POST /api/auth/register ─────────────────────────────────────
